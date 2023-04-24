@@ -24,8 +24,11 @@ const routes = [
       {
         name: `keywords`,
         content:`Higher or Lower, guessing game, login, sign in`
+      },
+      {
+        href: `/images/icons/svgimage.svg`,
+        type:`image`
       }
-   
     ]
   },
   {
@@ -48,7 +51,7 @@ const routes = [
         content:`Higher or Lower, guess the next number, guessing game, test your skills, play now`
       },
       {
-        href: `/images/icons/imagepng.svg`,
+        href: `/images/icons/svgimage.svg`,
         type:`image`
       }
     ]

@@ -12,7 +12,7 @@
                         <input  v-model="email_input" emailtype="text" placeholder="Please Enter Your Email" required>
                         <label   for="password" required>PassWord</label>
                         <input   v-model="pass_input" type="password"  placeholder="Please Enter Password" >
-                        <button class="login-btn" @click="logIn" >Login</button>
+                        <button   class="login-btn" @click="logIn" >Login</button>
                     </div>
                     <h2>{{ errorMessage }}</h2>
                 </div>
@@ -36,21 +36,32 @@
                 login: undefined,
                 token: undefined,
                 errorMessage: undefined,
-                lossCount:Cookies.get(`lossCount`),
-                winCount :Cookies.get(`winCount`),
+                lossCount:0,
+                winCount:0,
+                newLossCount:Cookies.get(`lossCount`),
+                newWinCount: Cookies.get(`winCount` ),
 
             }
     },
     methods: {
          //created methods that takes details value as an argument.
         logIn( details ){
+            if (this.newLossCount && this.newWinCount){
+                  //set Cookies with the  value of winCount and lossCount 
+                Cookies.set( 'winCount', this.newLossCount )
+                Cookies.set( 'lossCount', this.newLossCount )
+            } else{
+                  //set Cookies with the  value of winCount and lossCount 
+                Cookies.set( 'winCount', this.winCount )
+                Cookies.set( 'lossCount', this.lossCount )
+            }
+            
+         
             //assigned the values of email_valu and pass_value from users text input, 
             // using the v - model vue method to bind the text input  with a variable
             this.email_value = this.email_input
             this.pass_value = this.pass_input
-            //set Cookies with the  value of winCount and lossCount 
-            Cookies.set( 'winCount', this.winCount )
-            Cookies.set( 'lossCount', this.lossCount )
+
             details,
             //sending axios  POST method to check for login Authentication 
         axios.request( {
@@ -61,7 +72,6 @@
                 // data values required to send a POST login
                 email:this.email_value,
                 password:this.pass_value
-            
             }
             // on a response, assign a variable to the value of a response  
         } ).then( ( response ) =>{
@@ -77,7 +87,9 @@
         } )
         }
     },
-    
+    mounted(){
+        
+   }
     }
 </script>
 

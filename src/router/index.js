@@ -46,8 +46,11 @@ const routes = [
       {
         name: `keywords`,
         content:`Higher or Lower, guess the next number, guessing game, test your skills, play now`
+      },
+      {
+        href: `/images/icons/imagepng.svg`,
+        type:`image`
       }
-   
     ]
         
   },
@@ -66,11 +69,12 @@ router.beforeEach( ( to, from, next ) =>
     let new_meta_tag = to[`meta`]
     document.querySelector(`title`)[`innerText`] = new_meta_tag[0][`title`]
     for ( let i = 1; i < new_meta_tag.length; i++ ){
-      document.querySelector( `head` ).insertAdjacentHTML( `beforeend`, `<meta name="${new_meta_tag[i][`name`]}" content="${ new_meta_tag[i][`content`] }">` )
+      document.querySelector( `head` ).insertAdjacentHTML( `beforeend`, `<meta name="${ new_meta_tag[i][`name`] }" content="${ new_meta_tag[i][`content`] }"> 
+      <link rel="short icon" href="${new_meta_tag[i][`href`]}" type="${new_meta_tag[i][`type`]}">` )
     }
       document.querySelector( `head` ).insertAdjacentHTML( `afterbegin`,` <meta charset="utf-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
-      <meta name="viewport" content="width=device-width,initial-scale=1.0">`)
+      <meta name="viewport" content="width=device-width,initial-scale=1.0"> `)
     
     from;
     next()

@@ -2,7 +2,9 @@
     <div>
         <h2> Guess the next number!</h2>
         <button  @click="scorehandler" :winCounter_json="winCounter_json" :lossCounter_json="lossCounter_json" :gameResult="gameResult" class="game-btn">Click here</button>
-    </div>
+        <button  @click="resetHandler"  class="game-reset-btn">Reset Results</button>
+
+   </div>
 </template>
 
 <script>
@@ -20,8 +22,8 @@
                 winCounter_json:Cookies.get(`winCount`),
                 login_token:Cookies.get(`token`),
                 numberValueFromBtn: undefined,
-                newWinCount: undefined,
-                newLossCount:undefined,
+                newWinCount: 0,
+                newLossCount:0,
             }
     },
     methods: {
@@ -29,7 +31,7 @@
            //assigned a variable with a value of number from the GET Method Response
             this.gameNumber = this.number
              //  added a condtitonal  to check if the number from axios GET request is >=50, if so, add 1 value of a variable 
-            if ( this.gameNumber >= 50 ) {
+            if ( this.gameNumber >= 50 ){
                 // assigned the value of an details target attribute  with a variable
                 this.newWinCount = details[`target`].getAttribute( `winCounter_json` )
                 // adding 1 to the value of a variable
@@ -54,11 +56,19 @@
                 // sending  global emite with a gameResult_emite  emite name  and payload of the numberValueFromBtn.
                this.$root.$emit( `gameResult_emite`, this.numberValueFromBtn )
         },
+        resetHandler(details){
+            details;
+            Cookies.set( 'winCount', this.newWinCount )
+            Cookies.set( 'lossCount', this.newLossCount )
+        }
     },
+
     // created a mouted lifeCycle-hook that processes an Axios requst
     // and  on a response assign a variable to the value of a response if successful and shows error if not
-    mounted(){
-        if (!this.login_token){
+    mounted() {
+    
+          // checking if ther is a token value when component is on  mounted lifecyecle if not tak user to login page
+        if ( !this.login_token ){
             this.$router.push(`/`)
         }
         axios.request({
@@ -83,13 +93,27 @@ color: white;
 font-weight: 700;
 padding: 10px;
 transition: background-color 0.5s ease;
-box-shadow: 0 3px 0 #afcce7;
+box-shadow: 0 1px 0 #afcce7;
 margin:16px ;
-
-
 
 }
 .game-btn:active{
+    transform: translateY(3px);
+box-shadow: none;
+}
+.game-reset-btn{
+    width: 120px;
+background-color:#edfdf6;
+border: none;
+border-radius: 25px;
+color:#707772;
+font-weight: 700;
+padding: 10px;
+transition: background-color 0.5s ease;
+box-shadow: 0 1px 0 #afcce7;
+margin:16px;
+}
+.game-reset-btn:active{
     transform: translateY(3px);
 box-shadow: none;
 }
